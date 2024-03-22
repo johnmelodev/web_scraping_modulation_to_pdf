@@ -1,0 +1,15 @@
+- Entrar na planilha excel
+	- Usar biblioteca Openpyxl para ler a planilha
+	- Selecionar as empresas que devem ser raspadas
+	- sites onde acha seus devidos CNPJ
+	- Extrair os cnpjs da coluna "CNPJ"
+	- usar o site cadastroempresa.com.br para consultar a empresa pois os outros comecam a bloquear depois de um tempo
+
+- use esses CNPJs para entrar em um site e baixar um pdf
+	- Entrar em um site, pesquisar e depois acessar a pagina com info da empresa
+	- Tentar montar um link direto para aquela página
+
+- Salvar esse pdf para uma pasta local
+	- Imprimir a pagina atual como um PDF, usando Selenium
+
+pip3 install Selenium webdriver-manager Openpyxl
