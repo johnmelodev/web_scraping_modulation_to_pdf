@@ -1,3 +1,4 @@
+import requests
 from selenium.common.exceptions import *
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -7,13 +8,28 @@ import openpyxl
 from time import sleep
 import base64
 
-# file name
+# Your proxy key
+'''
+api_key = ''
+
+response = requests.get(
+    url='https://proxy.scrapeops.io/v1/',
+    params={
+        'api_key': api_key,
+        'url': 'https://quotes.toscrape.com/',
+    },
+)
+
+print('Response Body: ', response.content)
+'''
+
+# File name
 workbook = openpyxl.load_workbook('cnpjs.xlsx')
-# page name
+# Page name
 sheet_data = workbook['data']
-# column
+# Column
 cnpjs = []
-# line (iterar sobre a coluna = min_col1 até a max_col1 e sobre a linha min_row2 até a max_row11)
+# Row (iterate over the column = min_col1 to max_col1 and over the row min_row2 to max_row11)
 for line in sheet_data.iter_rows(min_col=1, max_col=1, min_row=2, max_row=11):
     for cell in line:
         cnpjs.append(cell.value)
@@ -42,14 +58,13 @@ def start_driver():
 
 driver = start_driver()
 
-
 for cnpj in cnpjs:
     driver.get(f'https://cadastroempresa.com.br/cnpj/{cnpj}')
     sleep(3)
     base64_string = driver.print_page()
     pdf_in_bytes = base64.b64decode(base64_string)
 
-    # formatting cnpj
+    # Formatting CNPJ
     format_cnpj = cnpj.replace('.', ',').replace('-', '').replace('/', '')
 
     with open(f'./company data/{format_cnpj}.pdf', 'wb') as file:
